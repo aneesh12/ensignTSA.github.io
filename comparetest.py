@@ -102,7 +102,11 @@ for subdir, dirs, files in os.walk(rootdir):
 for i in range(4):
     input_letter = random.choice(letters)
     input_letter = input_letter[5]
+<<<<<<< HEAD
     print "Please make the  letter", input_letter
+=======
+    print "Please make the letter", input_letter
+>>>>>>> refs/remotes/origin/master
     time.sleep(1)
     print ""
     Aneesh()
