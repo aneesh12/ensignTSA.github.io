@@ -11,7 +11,7 @@ import math
 import time
 from PIL import Image
 
-def Aneesh():
+def Aneesh(input_letter):
     cap = cv2.VideoCapture(0)
     t_end = time.time() + 4
     while time.time() < t_end:
@@ -101,16 +101,38 @@ def Aneesh():
             #if mse(user, imageB)<least_MSE:
             #    least_MSE=mse(user, imageB)
             #    similar_file_name=file_name
-    similar_file_name=MSE.keys()[MSE.values().index(min(MSE.values()))]
-    del MSE[MSE.keys()[MSE.values().index(min(MSE.values()))]]
-    second_similar_file=MSE.keys()[MSE.values().index(min(MSE.values()))]
-    print second_similar_file[5] 
-    print similar_file_name[5]
-    imageB = cv2.imread(similar_file_name)
-    imageB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
-    #compare_images(user,imageB , similar_file_name)
-    imageB = cv2.imread(second_similar_file)
-    imageB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
+    MSE_range = max(MSE.values()) - min(MSE.values())
+    ten_percent = MSE_range/10
+    ten_percent_limit = min(MSE.values()) + (MSE_range/10)
+    
+    match=False
+    for subdir, dirs, files in os.walk(rootdir):
+        for file in files:
+            file_name = os.path.join(subdir, file)
+            imageB = cv2.imread(file_name)
+            imageB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
+            if min(MSE.values()) <= mse(user, imageB) <= ten_percent_limit:
+                if file_name[5]==input_letter:
+                    match=True
+    
+    if match==True:
+        print "you made the correct letter" , input_letter
+    else:
+        print "sorry try again"
+            #if mse(user, imageB)<least_MSE:
+            #    least_MSE=mse(user, imageB)
+            #    similar_file_name=file_name
+    
+    #similar_file_name=MSE.keys()[MSE.values().index(min(MSE.values()))]
+    #del MSE[MSE.keys()[MSE.values().index(min(MSE.values()))]]
+    #second_similar_file=MSE.keys()[MSE.values().index(min(MSE.values()))]
+    #print second_similar_file[5] 
+    #print similar_file_name[5]
+    #imageB = cv2.imread(similar_file_name)
+    #imageB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
+    ##compare_images(user,imageB , similar_file_name)
+    #imageB = cv2.imread(second_similar_file)
+    #imageB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
     #compare_images(user,imageB , second_similar_file)
     # load the images -- the original, the original + contrast,
     # and the original + photoshop
@@ -143,7 +165,4 @@ def Aneesh():
     #compare_images(original, contrast, "Original vs. Contrast")
     #compare_images(original, shopped, "Original vs. Photoshopped")
 
-Aneesh()
-Aneesh()
-Aneesh()
-Aneesh()
+Aneesh("Y")
