@@ -75,7 +75,7 @@ def compare(input_letter):
             MSE[file_name]=(mse(user, imageB))
 
     MSE_range = max(MSE.values()) - min(MSE.values())
-    ten_percent = MSE_range/10
+    ten_percent = MSE_range/5
     ten_percent_limit = min(MSE.values()) + (MSE_range/10)
     
     match=False
